@@ -3,7 +3,9 @@ import mysql from "mysql2";
 import cors from "cors";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
  
+dotenv.config();
 const app = express();
 const PORT = 8080;
  
@@ -11,10 +13,10 @@ app.use(express.json());
 app.use(cors());
  
 const db = mysql.createConnection({
-    user: "root",
-    host: "localhost",
-    password: "Dangcapmaimai123",
-    database: "tranpham"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
 });
  
 db.connect(function(err) {
@@ -156,6 +158,6 @@ app.post('/register',(req, res) => {
     } )
 });
  
-app.listen(PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
   console.log(`Example app listening on port ${PORT}`)
 });
